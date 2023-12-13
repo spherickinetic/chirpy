@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChirpController;
+use App\Http\Controllers\FollowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +33,12 @@ Route::middleware('auth')->group(function () {
 Route::resource('chirps', ChirpController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
+
+Route::resource('followers', FollowerController::class)
+    ->only(['index'])
+    ->middleware(['auth', 'verified']);
+
+Route::post('follow-me',[FollowerController::class, 'store'])->name('followers.store');
+Route::post('unfollow-me',[FollowerController::class, 'destroy'])->name('followers.destroy');
 
 require __DIR__.'/auth.php';

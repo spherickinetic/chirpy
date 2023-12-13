@@ -49,6 +49,45 @@
                                     </x-slot>
                                 </x-dropdown>
                             @endif
+
+
+
+                            @if (!$chirp->user->is(auth()->user()))
+                                <x-dropdown>
+                                    <x-slot name="trigger">
+                                        <button>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                            </svg>
+                                        </button>
+                                    </x-slot>
+                                    <x-slot name="content">
+                                        @if($chirp->user->followers->contains(auth()->user()))
+                                            <form method="POST" action="{{ route('followers.destroy') }}">
+                                                @csrf
+                                                @method('post')
+                                                <input type="hidden" id="follower_id" name="follower_id" value="{{ $chirp->user->id }}">
+                                                <x-dropdown-link :href="route('followers.destroy')" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    {{ __('Unfollow') }}
+                                                </x-dropdown-link>
+                                            </form>
+                                        @else
+                                            <form method="POST" action="{{ route('followers.store') }}">
+                                                @csrf
+                                                @method('post')
+                                                <input type="hidden" id="follower_id" name="follower_id" value="{{ $chirp->user->id }}">
+                                                <x-dropdown-link :href="route('followers.store')" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    {{ __('Follow') }}
+                                                </x-dropdown-link>
+                                            </form>
+                                        @endif
+                                    </x-slot>
+                                </x-dropdown>
+                            @endif
+
+
+
+
                         </div>
                         <p class="mt-4 text-lg text-gray-900">{{ $chirp->message }}</p>
                     </div>
