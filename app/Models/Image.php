@@ -13,9 +13,4 @@ class Image extends Model
     protected $fillable = [
         'url',
     ];
-
-    public function chirp(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }

@@ -13,7 +13,7 @@ class Chirp extends Model
     use HasFactory;
 
     protected $fillable = [
-        'message',
+        'message'
     ];
 
     protected $dispatchesEvents = [
@@ -25,8 +25,8 @@ class Chirp extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function image(): HasOne
+    public function image(): BelongsTo
     {
-        return $this->hasOne(Image::class);
+        return $this->belongsTo(Image::class);
     }
 }
