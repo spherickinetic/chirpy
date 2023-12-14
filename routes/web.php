@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChirpController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FollowerController;
 
 /*
@@ -40,5 +41,7 @@ Route::resource('followers', FollowerController::class)
 
 Route::post('follow-me',[FollowerController::class, 'store'])->name('followers.store');
 Route::post('unfollow-me',[FollowerController::class, 'destroy'])->name('followers.destroy');
+
+Route::delete('delete-image',[ImageController::class, 'destroy'])->name('images.destroy');
 
 require __DIR__.'/auth.php';

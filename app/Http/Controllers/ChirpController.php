@@ -35,9 +35,19 @@ class ChirpController extends Controller
         $validated = $request->validate([
             'message' => 'required|string|max:255',
         ]);
- 
-        $request->user()->chirps()->create($validated);
- 
+
+        $chirp = new Chirp();
+        $chirp->message = $validated['message'];
+        $chirp->user()->associate($request->user());
+
+        if($request->hasFile('image'))
+        {
+            $image = ImageController::storeImage($request);
+            $chirp->image()->associate($image);
+        }
+
+        $chirp->save();
+
         return redirect(route('chirps.index'));
     }
 
