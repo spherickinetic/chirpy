@@ -19,8 +19,8 @@ class ChirpFactory extends Factory
     public function definition(): array
     {
         return [
-            'message' => fake()->sentence(),
-            'user_id' => fake()->numberBetween(1,20),
+            'message' => fake()->realText(),
+            'user_id' => fake()->numberBetween(1,10),
         ];
     }
 }
