@@ -11,6 +11,8 @@ The Chirpy app is a social media platform developed using the Laravel framework,
 * **User Authentication** - Allows users to sign up, log in, and log out securely.
 * **Tweeting** - Post chirps and view your timeline.
 * **Notifications** Receive notifications for new chirps.
+* **Followers** Follow and unfollow other users.
+* **Images** Add images to Chirps.
 
 ## Installation
 
@@ -38,6 +40,12 @@ Update the .env file with your database settings.
 
    ```bash
    php artisan migrate
+   ```
+
+5. Seed the database
+
+   ```bash
+   php artisan db:seed
    ```
 
 6. Start the dev server
