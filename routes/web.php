@@ -24,10 +24,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('/', ChirpController::class)
-    ->only(['index', 'store', 'edit', 'update', 'destroy'])
+    ->only(['store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-Route::get('/', [ChirpController::class, 'index'])->name('index');
+    Route::get('/', [ChirpController::class, 'index'])->name('index');
+    Route::get('/{chirp}/edit', [ChirpController::class, 'edit'])->name('edit');
 
 Route::resource('/followers', FollowerController::class)
     ->only(['index'])
