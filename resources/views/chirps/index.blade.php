@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <form method="POST" action="{{ route('chirps.store') }}" enctype="multipart/form-data">
+        @auth
+        <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
             @csrf
             <textarea
                 name="message"
@@ -14,6 +15,7 @@
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
             <x-primary-button class="mt-4" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Chirp') }}</x-primary-button>
         </form>
+        @endauth
  
             @foreach ($chirps as $chirp)
             <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
@@ -40,13 +42,13 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('chirps.edit', $chirp)">
+                                        <x-dropdown-link :href="route('edit', $chirp)">
                                             {{ __('Edit') }}
                                         </x-dropdown-link>
-                                        <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
+                                        <form method="POST" action="{{ route('destroy', $chirp) }}">
                                             @csrf
                                             @method('delete')
-                                            <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                            <x-dropdown-link :href="route('destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
                                                 {{ __('Delete') }}
                                             </x-dropdown-link>
                                         </form>
@@ -93,10 +95,10 @@
 
 
                         </div>
+                        <p class="mt-4 text-lg text-gray-900">{{ $chirp->message }}</p>
                         @if($chirp->image)
                             <img src="images/{{$chirp->image->url}}" alt="image">
                         @endif
-                        <p class="mt-4 text-lg text-gray-900">{{ $chirp->message }}</p>
                     </div>
                 </div>
             </div>

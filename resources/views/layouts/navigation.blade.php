@@ -2,11 +2,12 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
+            @auth
             <div class="flex">
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
+                <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
                         {{ __('Chirp') }}
                     </x-nav-link>
                     <x-nav-link :href="route('followers.index')" :active="request()->routeIs('followers.index')">
@@ -64,7 +65,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-        <x-responsive-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
+        <x-responsive-nav-link :href="route('index')" :active="request()->routeIs('index')">
                 {{ __('Chirp') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('followers.index')" :active="request()->routeIs('followers.index')">
@@ -95,6 +96,16 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
+            @endauth
+            @if (Route::has('login'))
+                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                    <a href="{{ route('login') }}" class="font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
+
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="ml-4 font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 </nav>

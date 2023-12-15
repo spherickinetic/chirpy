@@ -48,7 +48,7 @@ class ChirpController extends Controller
 
         $chirp->save();
 
-        return redirect(route('chirps.index'));
+        return redirect(route('index'));
     }
 
     /**
@@ -84,7 +84,7 @@ class ChirpController extends Controller
  
         $chirp->update($validated);
  
-        return redirect(route('chirps.index'));
+        return redirect(route('index'));
     }
 
     /**
@@ -96,6 +96,6 @@ class ChirpController extends Controller
  
         $chirp->delete();
  
-        return redirect(route('chirps.index'));
+        return redirect(route('index'));
     }
 }
