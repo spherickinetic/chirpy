@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         @auth
-        <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('chirps.store') }}" enctype="multipart/form-data">
             @csrf
             <textarea
                 name="message"
@@ -42,13 +42,13 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('edit', $chirp)">
+                                        <x-dropdown-link :href="route('chirps.edit', $chirp)">
                                             {{ __('Edit') }}
                                         </x-dropdown-link>
-                                        <form method="POST" action="{{ route('destroy', $chirp) }}">
+                                        <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
                                             @csrf
                                             @method('delete')
-                                            <x-dropdown-link :href="route('destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                            <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
                                                 {{ __('Delete') }}
                                             </x-dropdown-link>
                                         </form>

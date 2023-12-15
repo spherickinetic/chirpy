@@ -23,12 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('/', ChirpController::class)
-    ->only(['store', 'update', 'destroy'])
+Route::resource('/chirps', ChirpController::class)
+    ->only(['store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
     Route::get('/', [ChirpController::class, 'index'])->name('index');
-    Route::get('/{chirp}/edit', [ChirpController::class, 'edit'])->name('edit');
 
 Route::resource('/followers', FollowerController::class)
     ->only(['index'])
