@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Chirp;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class ChirpController extends Controller
 {
@@ -16,6 +17,8 @@ class ChirpController extends Controller
     {
         return view('chirps.index', [
             'chirps' => Chirp::with('user')->latest()->get(),
+            // 'chirps' => User::with('chirps')->findOrFail(2)->chirps, // this get chirps of specific user
+            'popular_users' => User::withCount('chirps')->orderByDesc('chirps_count')->limit(5)->get()
         ]);
     }
 

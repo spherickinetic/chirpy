@@ -1,4 +1,8 @@
 <x-app-layout>
+    <div class="flex">
+    <div class="self-start sticky top-0 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+        <h2>Links</h2>
+    </div>
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         @auth
         <form method="POST" action="{{ route('chirps.store') }}" enctype="multipart/form-data">
@@ -57,7 +61,7 @@
                             @endif
 
 
-
+                            @auth
                             @if (!$chirp->user->is(auth()->user()))
                                 <x-dropdown>
                                     <x-slot name="trigger">
@@ -90,7 +94,7 @@
                                     </x-slot>
                                 </x-dropdown>
                             @endif
-
+                            @endauth
 
 
 
@@ -103,5 +107,14 @@
                 </div>
             </div>
             @endforeach
+        </div>
+
+        <div class="self-start sticky top-0 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+            Most Active Users
+            @foreach ($popular_users as $user)
+                <p>{{ $user->name }}</p>
+            @endforeach 
+        </div>
     </div>
+</div>
 </x-app-layout>
