@@ -1,9 +1,53 @@
 <x-app-layout>
     <div class="flex">
-    <div class="self-start sticky top-0 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+
+    <div class="basis-1/4 self-start sticky top-0 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <h2>Links</h2>
+        @auth
+        <div class="flex flex-col">
+            <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
+                {{ __('Chirp') }}
+            </x-nav-link>
+
+            <div>{{ Auth::user()->name }}</div>
+
+            <x-dropdown-link :href="route('profile.edit')">
+                {{ __('Profile') }}
+            </x-dropdown-link>
+
+            <x-nav-link :href="route('followers.index')" :active="request()->routeIs('followers.index')">
+                {{ __('Followers') }}
+            </x-nav-link>
+
+            <!-- Authentication -->
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <x-dropdown-link :href="route('logout')"
+                        onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                    {{ __('Log Out') }}
+                </x-dropdown-link>
+            </form>
+
+        </div>
+        @endauth
+        @guest
+        
+            @if (Route::has('login'))
+                <div class="p-6 text-right z-10">
+                    <a href="{{ route('login') }}" class="font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log me  in now</a>
+
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="ml-4 font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                    @endif
+                </div>
+            @endif
+
+        @endguest
     </div>
-    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+
+    <div class="basis-1/2 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         @auth
         <form method="POST" action="{{ route('chirps.store') }}" enctype="multipart/form-data">
             @csrf
@@ -24,9 +68,7 @@
             @foreach ($chirps as $chirp)
             <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
                 <div class="p-6 flex space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
+                    <img class="h-16" src="{{ $chirp->user->avatar_url }}" />
                     <div class="flex-1">
                         <div class="flex justify-between items-center">
                             <div>
@@ -109,10 +151,14 @@
             @endforeach
         </div>
 
-        <div class="self-start sticky top-0 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div class="basis-1/4 self-start sticky top-0 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
             Most Active Users
             @foreach ($popular_users as $user)
-                <p>{{ $user->name }}</p>
+                <div class="flex">
+                    <img class="h-8" src="{{ $user->avatar_url }}" />
+                    <span>{{ $user->name }}</span>
+                    <span>   - {{ $user->chirps_count }}</span>
+                </div>
             @endforeach 
         </div>
     </div>
