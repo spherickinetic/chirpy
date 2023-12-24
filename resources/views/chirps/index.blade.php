@@ -1,51 +1,7 @@
 <x-app-layout>
     <div class="flex">
 
-    <div class="basis-1/4 self-start sticky top-0 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <h2>Links</h2>
-        @auth
-        <div class="flex flex-col">
-            <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
-                {{ __('Chirp') }}
-            </x-nav-link>
-
-            <div>{{ Auth::user()->name }}</div>
-
-            <x-dropdown-link :href="route('profile.edit')">
-                {{ __('Profile') }}
-            </x-dropdown-link>
-
-            <x-nav-link :href="route('followers.index')" :active="request()->routeIs('followers.index')">
-                {{ __('Followers') }}
-            </x-nav-link>
-
-            <!-- Authentication -->
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-
-                <x-dropdown-link :href="route('logout')"
-                        onclick="event.preventDefault();
-                                    this.closest('form').submit();">
-                    {{ __('Log Out') }}
-                </x-dropdown-link>
-            </form>
-
-        </div>
-        @endauth
-        @guest
-        
-            @if (Route::has('login'))
-                <div class="p-6 text-right z-10">
-                    <a href="{{ route('login') }}" class="font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log me  in now</a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                    @endif
-                </div>
-            @endif
-
-        @endguest
-    </div>
+    <x-navigation></x-navigation>
 
     <div class="basis-1/2 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         @auth
